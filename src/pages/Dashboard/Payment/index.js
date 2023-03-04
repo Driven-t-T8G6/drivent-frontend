@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import useToken from '../../../hooks/useToken';
 import { Header, HotelType, Option, OptionsContainer, TicketType } from './styles';
 
 export default function Payment() {
@@ -8,14 +10,33 @@ export default function Payment() {
   const hotelOptions = ['Sem Hotel', 'Com Hotel'];
   const [corr, setCorr] = useState([]);
   const [corrr, setCorrr] = useState([]);
+  const [valor, setValor] = useState(0);
+  /*const token = useToken();
+  console.log(token);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const promise = axios.get('http://localhost:4000/tickets/types', config);
+  promise.then((resposta) => {
+    const dados = resposta.data;
+    console.log(dados);
+  });*/
 
   function showNextStep(ticketTypeOption, index) {
     if (ticketTypeOption === 'Presencial') {
-      setIsShowingHotels(!isShowingHotels);
+      setIsShowingHotels(true);
+      setValor(250);
+      if (corrr.length === 0) {
+        setIsShowingResume(false);
+      }
     }
     if (ticketTypeOption === 'Online') {
       setIsShowingHotels(false);
       setIsShowingResume(true);
+      setValor(100);
     }
 
     if (corr.length === 0) {
@@ -24,17 +45,19 @@ export default function Payment() {
     } else {
       setCorr([index]);
     }
-    if (corr[0] === index) {
+    /*if (corr[0] === index) {
       setCorr([]);
-    }
+    }*/
   }
 
   function showFinalStep(hotelOption, index) {
     if (hotelOption === 'Com Hotel') {
       setIsShowingResume(true);
+      setValor(600);
     }
     if (hotelOption === 'Sem Hotel') {
       setIsShowingResume(true);
+      setValor(250);
     }
 
     if (corrr.length === 0) {
@@ -43,9 +66,9 @@ export default function Payment() {
     } else {
       setCorrr([index]);
     }
-    if (corrr[0] === index) {
+    /*if (corrr[0] === index) {
       setCorrr([]);
-    }
+    }*/
   }
 
   console.log(corr);
@@ -86,7 +109,7 @@ export default function Payment() {
       ) : (
         <></>
       )}
-      {isShowingResume ? 'Fechado! O total ficou em R$ 600. Agora é só confirmar:' : <></>}
+      {isShowingResume ? `Fechado! O total ficou em R$ ${valor}. Agora é só confirmar:` : <></>}
     </>
   );
 }
