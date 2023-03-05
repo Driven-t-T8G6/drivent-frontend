@@ -41,3 +41,8 @@ export const StyledTitle = styled.h1`
 export const HotelsContainer = styled.div`
     display: flex;
 `;
+
+export const RoomContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;

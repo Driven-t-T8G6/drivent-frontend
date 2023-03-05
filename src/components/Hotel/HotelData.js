@@ -8,7 +8,7 @@ const StyledHotel = styled.div`
     height: 246px;
     margin: 34px;
     margin-left: 0px;
-    background-color: ${props => props.selected === props.index? '#FFEED2' : '#ebebeb'};
+    background-color: ${props => props.selected === props.id? '#FFEED2' : '#ebebeb'};
     border-radius: 10px;
     h1 {
       margin-left: 15px;
@@ -76,15 +76,17 @@ function getMessage(types) {
   return message;
 }
 
-export default function HotelData({ data, selectedState, index }) {
+export default function HotelData({ data, selectedState, roomsState }) {
   const [selected, setSelected] = selectedState;
-  const [rooms, setRooms] = useState();
+  const [rooms, setRooms] = useState([]);
   const [capacity, setCapacity] = useState(0);
   const [typesMessage, setTypesMessage] = useState('');
+  const [displayRooms, setDisplayRooms] = roomsState;
 
   const token = useToken();
   useEffect(async() => {
     const aux = await getHotelWithRoom(token, data.id);
+    console.log(aux.Rooms); 
     setRooms(aux.Rooms);
 
     let totalCapacity = 0;
@@ -99,8 +101,13 @@ export default function HotelData({ data, selectedState, index }) {
     setCapacity(totalCapacity);
   }, []);
 
+  function handleSelection() {
+    setSelected(data.id);
+    setDisplayRooms(rooms);
+  }
+
   return (
-    <StyledHotel selected={selected} index={index} onClick={() => setSelected(index)}>
+    <StyledHotel selected={selected} id={data.id} onClick={handleSelection}>
       <ImgContainer><img src={data.image} alt='Hotel Visualization'/></ImgContainer>
       <h1>{data.name}</h1>
       <h3>Tipos de acomodação:</h3>
