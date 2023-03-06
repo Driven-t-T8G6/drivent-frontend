@@ -13,6 +13,9 @@ const StyledRoom = styled.button`
 
     border: 1px solid #CECECE;
     border-radius: 10px;
+    :hover {
+        cursor: pointer;
+    }
     h1 {
         font-family: 'Roboto';
         font-style: normal;
@@ -26,7 +29,7 @@ const StyledRoom = styled.button`
         margin-left: 7px;
     }
     #pink {
-        color: #FF4791;
+      color: #FF4791;
     }
     :disabled {
         background-color: #E9E9E9;
@@ -43,8 +46,8 @@ export default function Room({ data, selectedRoomState }) {
       <h1>{data.name}</h1>
       <div>
         {[...Array(capacity - filled - (selectedRoom === data.id))].map((value, index) => <ion-icon key={index} name="person-outline"/>)}
-        {selectedRoom === data.id && <ion-icon name="person" id="pink"/>}
         {[...Array(filled)].map((value, index) => <ion-icon key={index} name="person"/>)}
+        {selectedRoom === data.id && <ion-icon name="person" id="pink"/>}
       </div>
     </StyledRoom>
   );

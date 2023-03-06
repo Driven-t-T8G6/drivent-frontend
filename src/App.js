@@ -13,6 +13,8 @@ import Dashboard from './pages/Dashboard';
 import FillSubscription from './pages/Dashboard/FillSubscription';
 import Payment from './pages/Dashboard/Payment';
 import Hotel from './pages/Dashboard/Hotel';
+import HotelUnchoosed from './pages/Dashboard/Hotel/HotelUnchoosed';
+import HotelChoosed from './pages/Dashboard/Hotel/HotelChoosed';
 import Activities from './pages/Dashboard/Activities';
 import Certificate from './pages/Dashboard/Certificate';
 
@@ -43,7 +45,9 @@ export default function App() {
               >
                 <Route path="subscription" element={<FillSubscription />} />
                 <Route path="payment" element={<Payment />} />
-                <Route path="hotel" element={<Hotel />} />
+                <Route path="hotel" element={<Hotel/>}/>
+                <Route path="hotel/choosed" element={<HotelChoosed/>}/>
+                <Route path="hotel/notchosen" element={<HotelUnchoosed/>}/>
                 <Route path="activities" element={<Activities />} />
                 <Route path="certificate" element={<Certificate />} />
                 <Route index path="*" element={<Navigate to="/dashboard/subscription" />} />
