@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledRoom = styled.button`
@@ -36,18 +37,18 @@ const StyledRoom = styled.button`
     }
 `;
 
-export default function Room({ data, selectedRoomState }) {
+export default function Room({ data, selectedRoomState, booked }) {
   const [capacity, filled] = [data.capacity, data.Booking.length];
   const [selectedRoom, setSelectedRoom] = selectedRoomState;
+  const unfilled = capacity - filled - (selectedRoom === data.id && !booked);
 
-  console.log(data.id + ' ' + selectedRoom);
   return(
     <StyledRoom disabled={selectedRoom !== data.id && capacity === filled} selectedRoom={selectedRoom} id={data.id} onClick={() => setSelectedRoom(data.id)}>
       <h1>{data.name}</h1>
       <div>
-        {[...Array(capacity - filled - (selectedRoom === data.id))].map((value, index) => <ion-icon key={index} name="person-outline"/>)}
-        {[...Array(filled)].map((value, index) => <ion-icon key={index} name="person"/>)}
-        {selectedRoom === data.id && <ion-icon name="person" id="pink"/>}
+        {unfilled > 0 && [...Array(unfilled)].map((value, index) => <ion-icon key={index} name="person-outline"/>)}
+        {filled - booked > 0 && [...Array(filled - booked)].map((value, index) => <ion-icon key={index} name="person"/>)}
+        {(selectedRoom === data.id || booked) && <ion-icon name="person" id="pink"/>}
       </div>
     </StyledRoom>
   );

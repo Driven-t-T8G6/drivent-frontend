@@ -25,7 +25,7 @@ export default function HotelChoosed() {
       <StyledTitle>Escolha de hotel e quarto</StyledTitle>
       <h2>Você já escolheu seu quarto:</h2>
       <ChoosedHotelData data={booking.Room} selectedState={['', '']} roomsState={['', '']} type='selectedRoom'/>
-      <StyledChangeButton onClick={() => navigate('/dashboard/hotel/notchosen')}>TROCAR QUARTO</StyledChangeButton>
+      <StyledChangeButton onClick={() => navigate('/dashboard/hotel/notchosen?bookedRoom=' + booking.Room.id)}>TROCAR QUARTO</StyledChangeButton>
     </StyledHotelChoosedView>,
   };
 
