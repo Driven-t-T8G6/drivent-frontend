@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
-import { getHotelWithRoom } from '../../services/hotels';
+import * as hotelServices from '../../services/hotelApi';
 
 const StyledHotel = styled.div`
     width: 196px;
@@ -10,6 +10,9 @@ const StyledHotel = styled.div`
     margin-left: 0px;
     background-color: ${props => props.selected === props.id? '#FFEED2' : '#ebebeb'};
     border-radius: 10px;
+    :hover {
+        cursor: pointer;
+    }
     h1 {
       margin-left: 15px;
       margin-top: 10px;
@@ -85,7 +88,7 @@ export default function HotelData({ data, selectedState, roomsState }) {
 
   const token = useToken();
   useEffect(async() => {
-    const aux = await getHotelWithRoom(token, data.id);
+    const aux = await hotelServices.getHotelWithRoom(token, data.id);
     console.log(aux.Rooms); 
     setRooms(aux.Rooms);
 
