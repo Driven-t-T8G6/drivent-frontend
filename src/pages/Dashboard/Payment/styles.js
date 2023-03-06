@@ -104,3 +104,43 @@ export const ResumeContainer = styled.div`
     padding: 12px;
   }
 `;
+
+export const TicketChosenResumeContainer = styled.div`
+  margin-top: 37px;
+  p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #8e8e8e;
+  }
+`;
+export const TicketChosenResume = styled.div`
+  width: 290px;
+  height: 108px;
+  background: #ffeed2;
+  border-radius: 20px;
+`;
+
+export const PaymentContainer = styled.div`
+  margin-top: 37px;
+  p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #8e8e8e;
+  }
+  button {
+    margin-top: 20px;
+    background: #e0e0e0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 12px;
+  }
+`;
