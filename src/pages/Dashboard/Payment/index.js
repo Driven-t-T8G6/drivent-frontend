@@ -1,34 +1,56 @@
 import axios from 'axios';
-import { useContext, useState } from 'react';
-import useToken from '../../../hooks/useToken';
-import { Header, HotelType, Option, OptionsContainer, TicketType } from './styles';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import useEnrollment from '../../../hooks/api/useEnrollment';
+import useSendTicket from '../../../hooks/api/useSendTicket';
+import useTicketTypes from '../../../hooks/api/useTicketTypes';
+import {
+  Header,
+  HotelType,
+  Option,
+  OptionsContainer,
+  TicketType,
+  WithoutEnrollment,
+  ResumeContainer,
+  Price,
+} from './styles';
 
 export default function Payment() {
   const [isShowingResume, setIsShowingResume] = useState(false);
   const [isShowingHotels, setIsShowingHotels] = useState(false);
-  const ticketTypeOptions = ['Presencial', 'Online'];
-  const hotelOptions = ['Sem Hotel', 'Com Hotel'];
+  const [ticketTypeId, setTicketTypeId] = useState(0);
+  const ticketTypeOptions = [
+    { name: 'Presencial', price: 250 },
+    { name: 'Online', price: 100 },
+  ];
+  const hotelOptions = [
+    { name: 'Sem Hotel', price: 0 },
+    { name: 'Com Hotel', price: 350 },
+  ];
   const [corr, setCorr] = useState([]);
   const [corrr, setCorrr] = useState([]);
   const [valor, setValor] = useState(0);
-  /*const token = useToken();
-  console.log(token);
+  const { enrollment } = useEnrollment();
+  const { ticketTypes } = useTicketTypes();
+  const { ticketLoading, createTicket } = useSendTicket();
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const promise = axios.get('http://localhost:4000/tickets/types', config);
-  promise.then((resposta) => {
-    const dados = resposta.data;
-    console.log(dados);
-  });*/
+  if (!enrollment) {
+    return (
+      <>
+        <Header>Ingresso e Pagamento</Header>
+        <WithoutEnrollment>
+          <p>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</p>
+        </WithoutEnrollment>
+      </>
+    );
+  }
 
   function showNextStep(ticketTypeOption, index) {
     if (ticketTypeOption === 'Presencial') {
       setIsShowingHotels(true);
-      setValor(250);
+      setTicketTypeId(0);
+      setCorrr([]);
+      setIsShowingResume(false);
       if (corrr.length === 0) {
         setIsShowingResume(false);
       }
@@ -36,7 +58,9 @@ export default function Payment() {
     if (ticketTypeOption === 'Online') {
       setIsShowingHotels(false);
       setIsShowingResume(true);
-      setValor(100);
+      const ticketType = ticketTypes.find((ticketType) => ticketType.name === 'Online');
+      setValor(ticketType.price);
+      setTicketTypeId(ticketType.id);
     }
 
     if (corr.length === 0) {
@@ -45,19 +69,22 @@ export default function Payment() {
     } else {
       setCorr([index]);
     }
-    /*if (corr[0] === index) {
-      setCorr([]);
-    }*/
   }
 
   function showFinalStep(hotelOption, index) {
     if (hotelOption === 'Com Hotel') {
       setIsShowingResume(true);
-      setValor(600);
+      const ticketType = ticketTypes.find((ticketType) => ticketType.name === 'Presencial' && ticketType.includesHotel);
+      setValor(ticketType.price);
+      setTicketTypeId(ticketType.id);
     }
     if (hotelOption === 'Sem Hotel') {
       setIsShowingResume(true);
-      setValor(250);
+      const ticketType = ticketTypes.find(
+        (ticketType) => ticketType.name === 'Presencial' && !ticketType.includesHotel
+      );
+      setValor(ticketType.price);
+      setTicketTypeId(ticketType.id);
     }
 
     if (corrr.length === 0) {
@@ -66,12 +93,21 @@ export default function Payment() {
     } else {
       setCorrr([index]);
     }
-    /*if (corrr[0] === index) {
-      setCorrr([]);
-    }*/
   }
 
-  console.log(corr);
+  async function sendTicket() {
+    const newData = {
+      ticketTypeId,
+    };
+
+    try {
+      await createTicket(newData);
+      toast('Ticket criado com sucesso!');
+    } catch (err) {
+      toast('Não foi possível criar seu ticket!');
+    }
+  }
+
   return (
     <>
       <Header>Ingresso e Pagamento</Header>
@@ -82,9 +118,10 @@ export default function Payment() {
             return (
               <Option
                 cor={corr.includes(index) ? '#FFEED2' : '#FFFFFF'}
-                onClick={() => showNextStep(ticketTypeOption, index)}
+                onClick={() => showNextStep(ticketTypeOption.name, index)}
               >
-                {ticketTypeOption}
+                {ticketTypeOption.name}
+                <Price>R$ {ticketTypeOption.price}</Price>
               </Option>
             );
           })}
@@ -98,9 +135,10 @@ export default function Payment() {
               return (
                 <Option
                   cor={corrr.includes(index) ? '#FFEED2' : '#FFFFFF'}
-                  onClick={() => showFinalStep(hotelOption, index)}
+                  onClick={() => showFinalStep(hotelOption.name, index)}
                 >
-                  {hotelOption}
+                  {hotelOption.name}
+                  <Price>+ R$ {hotelOption.price}</Price>
                 </Option>
               );
             })}
@@ -109,7 +147,18 @@ export default function Payment() {
       ) : (
         <></>
       )}
-      {isShowingResume ? `Fechado! O total ficou em R$ ${valor}. Agora é só confirmar:` : <></>}
+      {isShowingResume ? (
+        <ResumeContainer>
+          <p>
+            Fechado! O total ficou em <span>R$ {valor}</span>. Agora é só confirmar:
+          </p>
+          <button disabled={ticketLoading} onClick={sendTicket}>
+            RESERVAR INGRESSO
+          </button>
+        </ResumeContainer>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
