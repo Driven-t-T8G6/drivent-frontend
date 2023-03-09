@@ -168,10 +168,15 @@ export const PaymentContainer = styled.div`
 `;
 
 export const TicketPaidContainer = styled.div`
+  display: flex;
+  align-items: center;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
   color: #454545;
+  img {
+    width: 40px;
+  }
 `;

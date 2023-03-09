@@ -1,4 +1,4 @@
-import axios from 'axios';
+import check from '../../../assets/images/Vector (6).png';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import useEnrollment from '../../../hooks/api/useEnrollment';
@@ -24,7 +24,7 @@ import {
 
 export default function Payment() {
   const [isTicketSent, setIsTicketSent] = useState(false);
-  const [isTicketPaid, setIsTicketPaid] = useState(true);
+  const [isTicketPaid, setIsTicketPaid] = useState(false);
   const [isShowingResume, setIsShowingResume] = useState(false);
   const [isShowingHotels, setIsShowingHotels] = useState(false);
   const [ticketTypeId, setTicketTypeId] = useState(0);
@@ -166,6 +166,7 @@ export default function Payment() {
             <p>Pagamento</p>
             {isTicketPaid ? (
               <TicketPaidContainer>
+                <img src={check} />
                 Pagamento confirmado! Prossiga para escolha de hospedagem e atividades
               </TicketPaidContainer>
             ) : (
