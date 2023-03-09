@@ -5,6 +5,7 @@ import * as paymentApi from '../../services/paymentApi';
 
 export default function usePayTicket() {
   const token = useToken();
+  console.log(token);
 
   const {
     data: cardData,

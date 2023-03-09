@@ -1,7 +1,10 @@
 import api from './api';
 
-export async function createPayment(ticketId, body, token) {
-  const response = await api.post('/payments/process', ticketId, body, {
+export async function createPayment(ticketId, cardData, token) {
+  console.log(cardData);
+  console.log(ticketId);
+  console.log(token);
+  const response = await api.post('/payments/process', ticketId, cardData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
