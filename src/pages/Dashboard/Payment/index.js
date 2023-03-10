@@ -1,4 +1,4 @@
-import axios from 'axios';
+import check from '../../../assets/images/Vector (6).png';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import useEnrollment from '../../../hooks/api/useEnrollment';
@@ -19,6 +19,7 @@ import {
   TicketChosenResume,
   TicketChosenResumeContainer,
   PaymentContainer,
+  TicketPaidContainer,
 } from './styles';
 
 export default function Payment() {
@@ -131,10 +132,10 @@ export default function Payment() {
   async function payTicket() {
     const cardData = {
       issuer: 'nubank',
-      number: number,
+      number: Number(number),
       name: name,
       expirationDate: expirationDate,
-      cvv: cvv,
+      cvv: Number(cvv),
     };
 
     try {
@@ -154,21 +155,26 @@ export default function Payment() {
           <TicketChosenResumeContainer>
             <p>Ingresso escolhido</p>
             <TicketChosenResume>
-              {ticketTypeId === 7 ? ticketTypeOptions[1].name : ticketTypeOptions[0].name}+{' '}
-              {ticketTypeId === 7 ? '' : ticketTypeId === 8 ? hotelOptions[1].name : hotelOptions[0].name}
-              <p2>R$ {ticketTypeId === 7 ? 100 : ticketTypeId === 8 ? ticketTypes[1].price : ticketTypes[2].price}</p2>
+              <h1>
+                {ticketTypeId === 7 ? ticketTypeOptions[1].name : ticketTypeOptions[0].name}+{' '}
+                {ticketTypeId === 7 ? '' : ticketTypeId === 8 ? hotelOptions[1].name : hotelOptions[0].name}
+              </h1>
+              <h2>R$ {ticketTypeId === 7 ? 100 : ticketTypeId === 8 ? ticketTypes[1].price : ticketTypes[2].price}</h2>
             </TicketChosenResume>
           </TicketChosenResumeContainer>
           <PaymentContainer>
             <p>Pagamento</p>
             {isTicketPaid ? (
-              'parabens'
+              <TicketPaidContainer>
+                <img src={check} />
+                Pagamento confirmado! Prossiga para escolha de hospedagem e atividades
+              </TicketPaidContainer>
             ) : (
               <>
                 <form>
                   <input
                     label="Card Number"
-                    type="text"
+                    type="tel"
                     fullWidth
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
@@ -181,7 +187,7 @@ export default function Payment() {
                     value={expirationDate}
                     onChange={(e) => setExpirationDate(e.target.value)}
                   />
-                  <input label="CVC" type="text" fullWidth value={cvv} onChange={(e) => setCvv(e.target.value)} />
+                  <input label="CVC" type="number" fullWidth value={cvv} onChange={(e) => setCvv(e.target.value)} />
                 </form>
                 <button onClick={payTicket}>FINALIZAR PAGAMENTO</button>
               </>

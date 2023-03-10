@@ -117,10 +117,32 @@ export const TicketChosenResumeContainer = styled.div`
   }
 `;
 export const TicketChosenResume = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 290px;
   height: 108px;
   background: #ffeed2;
   border-radius: 20px;
+  h1 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #454545;
+  }
+  h2 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #898989;
+  }
 `;
 
 export const PaymentContainer = styled.div`
@@ -142,5 +164,19 @@ export const PaymentContainer = styled.div`
     font-size: 14px;
     line-height: 16px;
     padding: 12px;
+  }
+`;
+
+export const TicketPaidContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #454545;
+  img {
+    width: 40px;
   }
 `;
