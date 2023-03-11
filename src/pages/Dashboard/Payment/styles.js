@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import 'react-credit-cards/es/styles-compiled.css';
 
 export const Header = styled.div`
   font-family: 'Roboto';
@@ -117,6 +118,7 @@ export const TicketChosenResumeContainer = styled.div`
   }
 `;
 export const TicketChosenResume = styled.div`
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -167,6 +169,11 @@ export const PaymentContainer = styled.div`
   }
 `;
 
+export const PaymentContainerMain = styled.div`
+  display: flex;
+  margin-top: 15px;
+`;
+
 export const TicketPaidContainer = styled.div`
   display: flex;
   align-items: center;
@@ -178,5 +185,33 @@ export const TicketPaidContainer = styled.div`
   color: #454545;
   img {
     width: 40px;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+  div {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+  }
+`;
+export const Input = styled.input`
+  box-sizing: border-box;
+  width: 503px;
+  height: 30px;
+  margin-bottom: 5px;
+  background: #ffffff;
+  border-radius: 5px;
+  ::placeholder {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 18px;
+    color: #949494;
   }
 `;
