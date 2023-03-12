@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import Container from '../Container';
 
+import { Link } from 'react-router-dom';
+
 export const StyledContainer = styled(Container)`
   font-size: 16px;
   flex-direction: column;
@@ -26,4 +28,24 @@ export const Row = styled.div`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+`;
+
+export const GitHubButton = styled.a`
+  width: 200px;
+  height: 40px;
+  border-radius: 4px;
+  outline: none;
+  background-color: white;
+  border: solid 1px;
+  margin: 10px;
+  font-family: 'Roboto';
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  ion-icon {
+    font-size: 24px;
+    margin: 4px;
+  }
 `;

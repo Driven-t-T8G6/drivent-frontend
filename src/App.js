@@ -22,6 +22,7 @@ import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
 
 import useToken from './hooks/useToken';
+import GithubAuth from './pages/GithubAuth';
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/" element={<Countdown />} />
               <Route path="/enroll" element={<Enroll />} />
               <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/githubAuth" element={<GithubAuth/>}/>
 
               <Route
                 path="/dashboard"
