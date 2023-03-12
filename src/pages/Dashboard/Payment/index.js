@@ -6,6 +6,7 @@ import usePayTicket from '../../../hooks/api/usePayTicket';
 import useSendTicket from '../../../hooks/api/useSendTicket';
 import useTicket from '../../../hooks/api/useTicket';
 import useTicketTypes from '../../../hooks/api/useTicketTypes';
+import Cards from 'react-credit-cards';
 
 import {
   Header,
@@ -20,6 +21,9 @@ import {
   TicketChosenResumeContainer,
   PaymentContainer,
   TicketPaidContainer,
+  Form,
+  Input,
+  PaymentContainerMain,
 } from './styles';
 
 export default function Payment() {
@@ -120,11 +124,11 @@ export default function Payment() {
 
     try {
       await createTicket(newData);
+      console.log(`Esse é o ticketTypeId: ${ticketTypeId}`);
       toast('Ticket criado com sucesso!');
       setIsTicketSent(true);
       const ticket = await getTickets();
       setTicketId(ticket.id);
-      console.log(ticket);
     } catch (err) {
       toast('Não foi possível criar seu ticket!');
     }
@@ -171,24 +175,44 @@ export default function Payment() {
               </TicketPaidContainer>
             ) : (
               <>
-                <form>
-                  <input
-                    label="Card Number"
-                    type="tel"
-                    fullWidth
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                  />
-                  <input label="Name" type="text" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
-                  <input
-                    label="Valid Thru"
-                    type="text"
-                    fullWidth
-                    value={expirationDate}
-                    onChange={(e) => setExpirationDate(e.target.value)}
-                  />
-                  <input label="CVC" type="number" fullWidth value={cvv} onChange={(e) => setCvv(e.target.value)} />
-                </form>
+                <PaymentContainerMain>
+                  <Cards cvc={cvv} expiry={expirationDate} focused="" name={name} number={number} />
+                  <Form>
+                    <Input
+                      label="Card Number"
+                      placeholder="Card Number"
+                      type="tel"
+                      fullWidth
+                      value={number}
+                      onChange={(e) => setNumber(e.target.value)}
+                    />
+
+                    <Input
+                      label="Name"
+                      placeholder="Name"
+                      type="text"
+                      fullWidth
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <Input
+                      label="Valid Thru"
+                      placeholder="Valid Thru"
+                      type="text"
+                      fullWidth
+                      value={expirationDate}
+                      onChange={(e) => setExpirationDate(e.target.value)}
+                    />
+                    <Input
+                      label="CVC"
+                      placeholder="CVC"
+                      type="number"
+                      fullWidth
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value)}
+                    />
+                  </Form>
+                </PaymentContainerMain>
                 <button onClick={payTicket}>FINALIZAR PAGAMENTO</button>
               </>
             )}
