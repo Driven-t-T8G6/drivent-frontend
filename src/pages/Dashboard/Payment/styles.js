@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import 'react-credit-cards/es/styles-compiled.css';
 
 export const Header = styled.div`
   font-family: 'Roboto';
@@ -102,5 +103,115 @@ export const ResumeContainer = styled.div`
     font-size: 14px;
     line-height: 16px;
     padding: 12px;
+  }
+`;
+
+export const TicketChosenResumeContainer = styled.div`
+  margin-top: 37px;
+  p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #8e8e8e;
+  }
+`;
+export const TicketChosenResume = styled.div`
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 290px;
+  height: 108px;
+  background: #ffeed2;
+  border-radius: 20px;
+  h1 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #454545;
+  }
+  h2 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #898989;
+  }
+`;
+
+export const PaymentContainer = styled.div`
+  margin-top: 37px;
+  p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #8e8e8e;
+  }
+  button {
+    margin-top: 20px;
+    background: #e0e0e0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 12px;
+  }
+`;
+
+export const PaymentContainerMain = styled.div`
+  display: flex;
+  margin-top: 15px;
+`;
+
+export const TicketPaidContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #454545;
+  img {
+    width: 40px;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 18px;
+  div {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+  }
+`;
+export const Input = styled.input`
+  box-sizing: border-box;
+  width: 503px;
+  height: 30px;
+  margin-bottom: 5px;
+  background: #ffffff;
+  border-radius: 5px;
+  ::placeholder {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 18px;
+    color: #949494;
   }
 `;

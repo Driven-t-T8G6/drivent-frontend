@@ -10,13 +10,13 @@ export default function useTicketTypes() {
     data: ticketTypes,
     loading: ticketTypesLoading,
     error: ticketTypesError,
-    act: getTicketTypes
+    act: getTicketTypes,
   } = useAsync(() => ticketApi.getTicketTypes(token));
 
   return {
     ticketTypes,
     ticketTypesLoading,
     ticketTypesError,
-    getTicketTypes
+    getTicketTypes,
   };
 }
