@@ -6,18 +6,19 @@ import AuthLayout from '../../layouts/Auth';
 
 import Input from '../../components/Form/Input';
 import Button from '../../components/Form/Button';
-import { Row, Title, Label } from '../../components/Auth';
+import { Row, Title, Label, GitHubButton } from '../../components/Auth';
 import Link from '../../components/Link';
 
 import EventInfoContext from '../../contexts/EventInfoContext';
 
 import useSignUp from '../../hooks/api/useSignUp';
+import useGitHubAuth from '../../hooks/useGitHubAuth';
 
 export default function Enroll() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const githubURL = useGitHubAuth();
   const { loadingSignUp, signUp } = useSignUp();
 
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export default function Enroll() {
         </form>
       </Row>
       <Row>
+        <GitHubButton href={githubURL} target="_blank"><ion-icon name="logo-github"></ion-icon>Login com o GitHub</GitHubButton>
         <Link to="/sign-in">Já está inscrito? Faça login</Link>
       </Row>
     </AuthLayout>

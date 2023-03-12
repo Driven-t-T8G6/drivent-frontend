@@ -26,7 +26,7 @@ export default function HotelUnchoosed() {
   useEffect(async() => {
     try {
       setTicket('loading');
-      const ticket = await ticketsService.getTicket(token);
+      const ticket = await ticketsService.getTickets(token);
       if(ticket.TicketType?.isRemote || !ticket.TicketType?.includesHotel)
         setTicket('noHotel');
       else if(ticket.TicketType?.includesHotel)
