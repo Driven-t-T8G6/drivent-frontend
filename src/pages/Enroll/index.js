@@ -57,7 +57,7 @@ export default function Enroll() {
         </form>
       </Row>
       <Row>
-        <GitHubButton href={githubURL} target="_blank"><ion-icon name="logo-github"></ion-icon>Login com o GitHub</GitHubButton>
+        <GitHubButton href={githubURL}><ion-icon name="logo-github"></ion-icon>Login com o GitHub</GitHubButton>
         <Link to="/sign-in">Já está inscrito? Faça login</Link>
       </Row>
     </AuthLayout>
