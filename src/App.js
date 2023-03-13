@@ -23,6 +23,7 @@ import { UserProvider } from './contexts/UserContext';
 
 import useToken from './hooks/useToken';
 import GithubAuth from './pages/GithubAuth';
+import PaymentCompleted from './pages/Dashboard/Payment/PaymentCompleted';
 
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
               >
                 <Route path="subscription" element={<FillSubscription />} />
                 <Route path="payment" element={<Payment />} />
+                <Route path="payment/completed" element={<PaymentCompleted/>} />
                 <Route path="hotel" element={<Hotel/>}/>
                 <Route path="hotel/choosed" element={<HotelChoosed/>}/>
                 <Route path="hotel/notchosen" element={<HotelUnchoosed/>}/>

@@ -8,7 +8,6 @@ export default function Hotel() {
   const navigate = useNavigate();
   const token = useToken();
   useEffect(async() => {
-    console.log('Hey');
     try {
       const response = await bookingServices.getBooking(token);
       navigate('/dashboard/hotel/choosed');
