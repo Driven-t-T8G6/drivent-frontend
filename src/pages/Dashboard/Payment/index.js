@@ -25,18 +25,16 @@ import {
   Input,
   PaymentContainerMain,
 } from './styles';
+import useToken from '../../../hooks/useToken';
 
 export default function Payment() {
+  const token = useToken();
   const [isTicketSent, setIsTicketSent] = useState(false);
   const [isTicketPaid, setIsTicketPaid] = useState(false);
   const [isShowingResume, setIsShowingResume] = useState(false);
   const [isShowingHotels, setIsShowingHotels] = useState(false);
   const [ticketTypeId, setTicketTypeId] = useState(0);
   const [ticketId, setTicketId] = useState(0);
-  const [number, setNumber] = useState('');
-  const [name, setName] = useState('');
-  const [expirationDate, setExpirationDate] = useState('');
-  const [cvv, setCvv] = useState('');
 
   const ticketTypeOptions = [
     { name: 'Presencial', price: 250 },
@@ -80,7 +78,6 @@ export default function Payment() {
       setIsShowingHotels(false);
       setIsShowingResume(true);
       const ticketType = ticketTypes.find((ticketType) => ticketType.name === 'Online');
-      console.log(ticketType);
       setValor(ticketType.price);
       setTicketTypeId(ticketType.id);
     }
@@ -96,6 +93,7 @@ export default function Payment() {
   function showFinalStep(hotelOption, index) {
     if (hotelOption === 'Com Hotel') {
       setIsShowingResume(true);
+      console.log(ticketTypes);
       const ticketType = ticketTypes.find((ticketType) => ticketType.name === 'Presencial' && ticketType.includesHotel);
       setValor(ticketType.price);
       setTicketTypeId(ticketType.id);
@@ -134,16 +132,8 @@ export default function Payment() {
     }
   }
   async function payTicket() {
-    const cardData = {
-      issuer: 'nubank',
-      number: Number(number),
-      name: name,
-      expirationDate: expirationDate,
-      cvv: Number(cvv),
-    };
-
     try {
-      await createPayment(ticketId, cardData);
+      await createPayment(ticketId, token);
       toast('Pagamento efetuado com sucesso!');
       setIsTicketPaid(true);
     } catch (err) {
@@ -171,48 +161,10 @@ export default function Payment() {
             {isTicketPaid ? (
               <TicketPaidContainer>
                 <img src={check} />
-                Pagamento confirmado! Prossiga para escolha de hospedagem e atividades
+                Redirecionando para a plataforma de checkout...
               </TicketPaidContainer>
             ) : (
               <>
-                <PaymentContainerMain>
-                  <Cards cvc={cvv} expiry={expirationDate} focused="" name={name} number={number} />
-                  <Form>
-                    <Input
-                      label="Card Number"
-                      placeholder="Card Number"
-                      type="tel"
-                      fullWidth
-                      value={number}
-                      onChange={(e) => setNumber(e.target.value)}
-                    />
-
-                    <Input
-                      label="Name"
-                      placeholder="Name"
-                      type="text"
-                      fullWidth
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    <Input
-                      label="Valid Thru"
-                      placeholder="Valid Thru"
-                      type="text"
-                      fullWidth
-                      value={expirationDate}
-                      onChange={(e) => setExpirationDate(e.target.value)}
-                    />
-                    <Input
-                      label="CVC"
-                      placeholder="CVC"
-                      type="number"
-                      fullWidth
-                      value={cvv}
-                      onChange={(e) => setCvv(e.target.value)}
-                    />
-                  </Form>
-                </PaymentContainerMain>
                 <button onClick={payTicket}>FINALIZAR PAGAMENTO</button>
               </>
             )}
