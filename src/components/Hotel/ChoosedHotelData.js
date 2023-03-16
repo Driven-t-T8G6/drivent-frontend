@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const StyledHotel = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 196px;
-    height: 246px;
+    height: 250px;
     margin: 34px;
     margin-left: 0px;
     background-color: #FFEED2;
@@ -63,6 +65,6 @@ export default function ChoosedHotelData({ data }) {
       <h4>{`${data?.name} (${capacityName[data?.capacity - 1]})`}</h4>
       <h3>Pessoas no seu quarto</h3>
       <h4>{data?.Booking?.length === 1 ? 'Apenas você' : `Você e mais ${data?.Booking?.length - 1} pessoas`}</h4>
-    </StyledHotel>    
+    </StyledHotel>
   );
 }
