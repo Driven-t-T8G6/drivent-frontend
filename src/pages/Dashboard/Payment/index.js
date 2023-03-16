@@ -93,7 +93,6 @@ export default function Payment() {
   function showFinalStep(hotelOption, index) {
     if (hotelOption === 'Com Hotel') {
       setIsShowingResume(true);
-      console.log(ticketTypes);
       const ticketType = ticketTypes.find((ticketType) => ticketType.name === 'Presencial' && ticketType.includesHotel);
       setValor(ticketType.price);
       setTicketTypeId(ticketType.id);
@@ -122,7 +121,6 @@ export default function Payment() {
 
     try {
       await createTicket(newData);
-      console.log(`Esse é o ticketTypeId: ${ticketTypeId}`);
       toast('Ticket criado com sucesso!');
       setIsTicketSent(true);
       const ticket = await getTickets();
@@ -150,10 +148,10 @@ export default function Payment() {
             <p>Ingresso escolhido</p>
             <TicketChosenResume>
               <h1>
-                {ticketTypeId === 7 ? ticketTypeOptions[1].name : ticketTypeOptions[0].name}+{' '}
-                {ticketTypeId === 7 ? '' : ticketTypeId === 8 ? hotelOptions[1].name : hotelOptions[0].name}
+                {ticketTypes[ticketTypeId - 1].name}
+                {ticketTypes[ticketTypeId - 1].name === 'Online' ? ' ' : ticketTypes[ticketTypeId - 1].includesHotel ? ' + Com Hotel' : ' + Sem Hotel'}
               </h1>
-              <h2>R$ {ticketTypeId === 7 ? 100 : ticketTypeId === 8 ? ticketTypes[1].price : ticketTypes[2].price}</h2>
+              <h2>R$ {ticketTypes[ticketTypeId - 1].price}</h2>
             </TicketChosenResume>
           </TicketChosenResumeContainer>
           <PaymentContainer>
