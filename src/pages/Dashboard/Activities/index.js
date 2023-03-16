@@ -1,17 +1,36 @@
 import { useEffect, useState } from 'react';
 import { getEventInfo } from '../../../services/eventApi';
-import { DaysContainer } from './style';
-import { DayContainer } from './style';
-import { DayFilter } from './style';
-import { Header } from './style';
+import {
+  Header,
+  DayFilter,
+  DayContainer,
+  DaysContainer,
+  LocationsContainer,
+  ActivitiesContainer,
+  SelectDayContainer,
+} from './style';
+import { eachDayOfInterval } from 'date-fns';
+import LocationComponent from '../../../components/ActivityLocation/LocationComponent';
 
 export default function Activities() {
-  const eventDays = ['Sexta', 'Sábado', 'Domingo'];
+  const [eventDays, setEventDays] = useState([]);
+  console.log('🚀 ~ file: index.js:12 ~ Activities ~ eventDays:', eventDays);
   const [isDaySelected, setIsDaySelected] = useState(false);
   const [corr, setCorr] = useState([]);
   useEffect(async () => {
     try {
       const eventData = await getEventInfo();
+      const { startsAt, endsAt } = eventData;
+      const daysOfEvent = eachDayOfInterval({
+        start: new Date(startsAt),
+        end: new Date(endsAt),
+      }).map((day) => {
+        return {
+          name: day.toLocaleDateString('pt-BR', { weekday: 'short' }).toUpperCase(),
+          date: day.toLocaleDateString('pt-BR', { day: 'numeric', month: 'numeric' }),
+        };
+      });
+      setEventDays(daysOfEvent);
       const eventStartDay = eventData.startsAt.slice(0, 10);
       const eventEndDay = eventData.endsAt.slice(0, 10);
       const diffInMs = new Date(eventEndDay) - new Date(eventStartDay);
@@ -32,21 +51,31 @@ export default function Activities() {
     }
   }
   return (
-    <>
-      <Header>Escolha de atividades</Header>
-      <DayFilter>
-        {isDaySelected ? '' : <p>Primeiro, filtre pelo dia do evento</p>}
-        <DaysContainer>
-          {eventDays.map((day, index) => {
-            return (
-              <DayContainer cor={corr.includes(index) ? '#FFD37D' : '#e0e0e0'} onClick={() => selectDay(day, index)}>
-                {day}
-              </DayContainer>
-            );
-          })}
-        </DaysContainer>
-      </DayFilter>
-      {isDaySelected ? 'Fazer locations' : ''}
-    </>
+    <ActivitiesContainer>
+      <SelectDayContainer>
+        <Header>Escolha de atividades</Header>
+        <DayFilter>
+          {isDaySelected ? '' : <p>Primeiro, filtre pelo dia do evento:</p>}
+          <DaysContainer>
+            {eventDays.map((day, index) => {
+              return (
+                <DayContainer cor={corr.includes(index) ? '#FFD37D' : '#e0e0e0'} onClick={() => selectDay(day, index)}>
+                  {day.name} {day.date}
+                </DayContainer>
+              );
+            })}
+          </DaysContainer>
+        </DayFilter>
+      </SelectDayContainer>
+      {isDaySelected ? (
+        <LocationsContainer>
+          <LocationComponent name="Auditório Principal" />
+          <LocationComponent name="Auditório Lateral" />
+          <LocationComponent name="Sala de Workshop" />
+        </LocationsContainer>
+      ) : (
+        ''
+      )}
+    </ActivitiesContainer>
   );
 }
