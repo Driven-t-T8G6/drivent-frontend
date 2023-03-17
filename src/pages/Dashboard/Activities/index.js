@@ -10,16 +10,20 @@ import {
   SelectDayContainer,
 } from './style';
 import { eachDayOfInterval } from 'date-fns';
-import LocationComponent from '../../../components/ActivityLocation/LocationComponent';
+import LocationComponent from '../../../components/Activities/ActivityLocation/LocationComponent';
+import { getActivities } from '../../../services/activityApi';
+import useToken from '../../../hooks/useToken';
 
 export default function Activities() {
+  const token = useToken();
   const [eventDays, setEventDays] = useState([]);
-  console.log('🚀 ~ file: index.js:12 ~ Activities ~ eventDays:', eventDays);
+  const [activities, setActivities] = useState([]);
   const [isDaySelected, setIsDaySelected] = useState(false);
   const [corr, setCorr] = useState([]);
   useEffect(async () => {
     try {
       const eventData = await getEventInfo();
+      setActivities(await getActivities(token));
       const { startsAt, endsAt } = eventData;
       const daysOfEvent = eachDayOfInterval({
         start: new Date(startsAt),
@@ -35,7 +39,6 @@ export default function Activities() {
       const eventEndDay = eventData.endsAt.slice(0, 10);
       const diffInMs = new Date(eventEndDay) - new Date(eventStartDay);
       const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1;
-      console.log(eventData);
     } catch (e) {
       console.log(e);
     }
@@ -69,9 +72,18 @@ export default function Activities() {
       </SelectDayContainer>
       {isDaySelected ? (
         <LocationsContainer>
-          <LocationComponent name="Auditório Principal" />
-          <LocationComponent name="Auditório Lateral" />
-          <LocationComponent name="Sala de Workshop" />
+          <LocationComponent
+            name="Auditório Principal"
+            activities={activities.filter((act) => act.location === 'Auditório Principal')}
+          />
+          <LocationComponent
+            name="Auditório Lateral"
+            activities={activities.filter((act) => act.location === 'Auditório Lateral')}
+          />
+          <LocationComponent
+            name="Sala de Workshop"
+            activities={activities.filter((act) => act.location === 'Sala de Workshop')}
+          />
         </LocationsContainer>
       ) : (
         ''

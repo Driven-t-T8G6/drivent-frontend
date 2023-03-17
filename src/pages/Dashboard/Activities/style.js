@@ -8,7 +8,9 @@ export const ActivitiesContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const SelectDayContainer = styled.div``;
+export const SelectDayContainer = styled.div`
+  margin-bottom: 60px;
+`;
 
 export const Header = styled.div`
   font-family: 'Roboto';
@@ -57,72 +59,6 @@ export const DayContainer = styled.div`
 
 export const LocationsContainer = styled.div`
   width: 100%;
-  height: 425px;
   display: flex;
+  flex-grow: 1;
 `;
-
-// export const MainAuditorium = styled.div`
-
-//   height: 100%;
-//   width: 100%;
-//   border: 1px solid #D7D7D7;
-//   position: relative;
-//   ::before {
-//     content: 'Auditório Principal';
-//     position: absolute;
-//     top: -25px;
-//     left: 50%;
-//     transform: translateX(-50%);
-
-//     font-family: 'Roboto';
-//     font-style: normal;
-//     font-weight: 400;
-//     font-size: 17px;
-//     line-height: 20px;
-//     color: #7b7b7b;
-//   }
-// `;
-
-// export const SideAuditorium = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   border: 1px solid #D7D7D7;
-//   position: relative;
-//   ::before {
-//     content: 'Auditório Lateral';
-//     position: absolute;
-//     top: -25px;
-//     left: 50%;
-//     transform: translateX(-50%);
-
-//     font-family: 'Roboto';
-//     font-style: normal;
-//     font-weight: 400;
-//     font-size: 17px;
-//     line-height: 20px;
-//     color: #7b7b7b;
-//   }
-// `;
-
-// export const WorkshopRoom = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   border-top: 1px solid #D7D7D7;
-//   border-right: 1px solid #D7D7D7;
-//   border-bottom: 1px solid #D7D7D7;
-//   position: relative;
-//   ::before {
-//     content: 'Sala de Workshop';
-//     position: absolute;
-//     top: -25px;
-//     left: 50%;
-//     transform: translateX(-50%);
-
-//     font-family: 'Roboto';
-//     font-style: normal;
-//     font-weight: 400;
-//     font-size: 17px;
-//     line-height: 20px;
-//     color: #7b7b7b;
-//   }
-// `;
