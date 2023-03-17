@@ -1,6 +1,17 @@
 import styled from 'styled-components';
+import ActivityComponent from '../Activity/ActivityComponent';
 
-export const LocationContainer = styled.div`
+export default function LocationComponent({ name, activities }) {
+  return (
+    <LocationContainer name={name}>
+      {activities.map((activity) => {
+        return <ActivityComponent activity={activity} />;
+      })}
+    </LocationContainer>
+  );
+}
+
+const LocationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,10 +32,4 @@ export const LocationContainer = styled.div`
     line-height: 20px;
     color: #7b7b7b;
   }
-`;
-
-export const ActivityContainer = styled.div`
-  background-color: red;
-  width: 100%;
-  height: 79px;
 `;
