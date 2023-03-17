@@ -6,6 +6,18 @@ export async function getActivities(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-
   return response.data;
+}
+
+export async function subscribeActivity(token, index) {
+  const response = await api.post(
+    `/activity/${index}`,
+    { index },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log(`id ${index} enviado como params`);
 }
