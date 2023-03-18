@@ -18,6 +18,7 @@ export default function Activities() {
   const token = useToken();
   const [eventDays, setEventDays] = useState([]);
   const [activities, setActivities] = useState([]);
+  console.log('🚀 ~ file: index.js:21 ~ Activities ~ activities:', activities);
   const [isDaySelected, setIsDaySelected] = useState(false);
   const [corr, setCorr] = useState([]);
   useEffect(async () => {
@@ -35,7 +36,6 @@ export default function Activities() {
         };
       });
       setEventDays(daysOfEvent);
-      console.log(activities);
     } catch (e) {
       console.log(e);
     }
