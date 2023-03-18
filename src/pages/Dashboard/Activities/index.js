@@ -35,10 +35,7 @@ export default function Activities() {
         };
       });
       setEventDays(daysOfEvent);
-      const eventStartDay = eventData.startsAt.slice(0, 10);
-      const eventEndDay = eventData.endsAt.slice(0, 10);
-      const diffInMs = new Date(eventEndDay) - new Date(eventStartDay);
-      const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1;
+      console.log(activities);
     } catch (e) {
       console.log(e);
     }
@@ -53,6 +50,7 @@ export default function Activities() {
       setCorr([index]);
     }
   }
+
   return (
     <ActivitiesContainer>
       <SelectDayContainer>
