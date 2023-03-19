@@ -23,14 +23,10 @@ export async function subscribeActivity(token, index) {
 }
 
 export async function unsubscribeActivity(token, index) {
-  const response = await api.delete(
-    `/activity/${index}`,
-    { index },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  console.log(`id ${index} enviado como params`);
+  const response = await api.delete(`/activity/${index}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(`id ${index} deletado como params`);
 }

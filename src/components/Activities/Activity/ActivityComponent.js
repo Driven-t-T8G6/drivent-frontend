@@ -6,18 +6,28 @@ import { subscribeActivity, unsubscribeActivity } from '../../../services/activi
 import useToken from '../../../hooks/useToken';
 import { useEffect, useState } from 'react';
 
-export default function ActivityComponent({ activity }) {
+export default function ActivityComponent({ activity, eventDays, corr }) {
   const token = useToken();
   const { title, startsAt, endsAt, capacity, subscriptions, id, Subscriptions } = activity;
   const [subscribed, setSubscribed] = useState(false);
+  const [isDisplayingActivity, setIsDisplayingActivity] = useState(false);
   const vacancy = capacity - subscriptions;
   const newStart = format(new Date(startsAt), 'HH:mm');
   const newEnd = format(new Date(endsAt), 'HH:mm');
   const duration = differenceInHours(new Date(endsAt), new Date(startsAt));
+  const activityDay = activity.startsAt.slice(8, 10) + '/' + activity.startsAt.slice(5, 7);
+  console.log(activityDay);
+  console.log(eventDays[corr[0]].date);
 
   useEffect(() => {
     if (Subscriptions.length > 0) setSubscribed(true);
-  }, [subscribed]);
+    if (activityDay === eventDays[corr[0]].date) {
+      setIsDisplayingActivity(true);
+    }
+    if (activityDay !== eventDays[corr[0]].date) {
+      setIsDisplayingActivity(false);
+    }
+  }, [subscribed, corr]);
 
   function subscribeUnsubscribe() {
     if (subscribed) {
@@ -29,7 +39,7 @@ export default function ActivityComponent({ activity }) {
     }
   }
 
-  return (
+  return isDisplayingActivity ? (
     <ActivityContainer duration={duration} subscribed={subscribed}>
       <TitleTime>
         <p>{title}</p>
@@ -44,5 +54,7 @@ export default function ActivityComponent({ activity }) {
         {subscribed ? <p>Inscrito</p> : vacancy === 0 ? <p>Esgotado</p> : <p>{vacancy} vagas</p>}
       </Vacancies>
     </ActivityContainer>
+  ) : (
+    ''
   );
 }
