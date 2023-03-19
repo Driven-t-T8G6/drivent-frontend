@@ -21,3 +21,16 @@ export async function subscribeActivity(token, index) {
   );
   console.log(`id ${index} enviado como params`);
 }
+
+export async function unsubscribeActivity(token, index) {
+  const response = await api.delete(
+    `/activity/${index}`,
+    { index },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log(`id ${index} enviado como params`);
+}
