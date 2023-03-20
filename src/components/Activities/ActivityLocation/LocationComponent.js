@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import ActivityComponent from '../Activity/ActivityComponent';
 
-export default function LocationComponent({ name, activities, showId }) {
+export default function LocationComponent({ name, activities, eventDays, corr }) {
   return (
     <LocationContainer name={name}>
       {activities.map((activity) => {
-        return <ActivityComponent activity={activity} key={activity.id}/>;
+        return <ActivityComponent activity={activity} key={activity.id} eventDays={eventDays} corr={corr} />;
       })}
     </LocationContainer>
   );

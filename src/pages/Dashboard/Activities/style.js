@@ -62,3 +62,19 @@ export const LocationsContainer = styled.div`
   display: flex;
   flex-grow: 1;
 `;
+
+export const StyledForbiddenMessage = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+
+  color: #8e8e8e;
+`;
