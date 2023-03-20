@@ -5,6 +5,7 @@ import { ActivityContainer, TitleTime, Vacancies } from './style';
 import { subscribeActivity, unsubscribeActivity } from '../../../services/activityApi';
 import useToken from '../../../hooks/useToken';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function ActivityComponent({ activity, eventDays, corr }) {
   const token = useToken();
@@ -16,8 +17,6 @@ export default function ActivityComponent({ activity, eventDays, corr }) {
   const newEnd = format(new Date(endsAt), 'HH:mm');
   const duration = differenceInHours(new Date(endsAt), new Date(startsAt));
   const activityDay = activity.startsAt.slice(8, 10) + '/' + activity.startsAt.slice(5, 7);
-  console.log(activityDay);
-  console.log(eventDays[corr[0]].date);
 
   useEffect(() => {
     if (Subscriptions.length > 0) setSubscribed(true);
@@ -29,16 +28,21 @@ export default function ActivityComponent({ activity, eventDays, corr }) {
     }
   }, [subscribed, corr]);
 
-  function subscribeUnsubscribe() {
-    if (subscribed) {
-      unsubscribeActivity(token, id);
-      setSubscribed(false);
-    } else {
-      subscribeActivity(token, id);
-      setSubscribed(true);
+  async function subscribeUnsubscribe() {
+    try {
+      if (subscribed) {
+        await unsubscribeActivity(token, id);
+        setSubscribed(false);
+      } else {
+        await subscribeActivity(token, id);
+        setSubscribed(true);
+      }
+    } catch (e) {
+      console.log(e);
+      toast('Conflito de horário, por favor escolha outra atividade!');
     }
   }
-
+  console.log(activity);
   return isDisplayingActivity ? (
     <ActivityContainer duration={duration} subscribed={subscribed}>
       <TitleTime>
